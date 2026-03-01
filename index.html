@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CINEROLL</title>
+<title>CINEROLL | Movie Vault</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -70,7 +70,7 @@
 
   .grid {
     max-width: 1100px; margin: 0 auto; padding: 0 2rem 4rem;
-    display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.5rem;
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.5rem;
   }
 
   .card {
@@ -82,137 +82,91 @@
   @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
   .card-poster {
-    height: 160px; display: flex; align-items: center; justify-content: center;
-    position: relative; overflow: hidden;
+    height: 340px; position: relative; overflow: hidden; background: #000;
   }
-  .poster-title {
-    font-family: 'Bebas Neue', sans-serif; font-size: 2.2rem; letter-spacing: 0.08em;
-    text-align: center; padding: 0 1rem; z-index: 1; line-height: 1.1;
+  .card-poster img {
+    width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease;
   }
+  .card:hover .card-poster img { transform: scale(1.1); }
+  
   .poster-grain {
-    position: absolute; inset: 0; opacity: 0.4;
+    position: absolute; inset: 0; opacity: 0.3; z-index: 2; pointer-events: none;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.2'/%3E%3C/svg%3E");
   }
   .card-poster::after {
-    content: ''; position: absolute; inset: 0; background: rgba(0,0,0,0.35);
-    opacity: 0; transition: opacity 0.2s; z-index: 2;
+    content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 60%, rgba(0,0,0,0.8));
+    z-index: 1;
   }
-  .card:hover .card-poster::after { opacity: 1; }
   .card-hover-play {
     position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
     z-index: 3; opacity: 0; transition: opacity 0.2s;
   }
   .card:hover .card-hover-play { opacity: 1; }
   .card-hover-play svg {
-    width: 44px; height: 44px; background: rgba(255,255,255,0.15); border-radius: 50%;
-    padding: 10px; backdrop-filter: blur(4px); border: 2px solid rgba(255,255,255,0.4);
+    width: 50px; height: 50px; background: var(--accent); color: #000; border-radius: 50%;
+    padding: 12px; box-shadow: 0 0 20px rgba(245,200,66,0.4);
   }
 
-  .card-body { padding: 1.2rem 1.4rem 1.4rem; }
-  .card-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; letter-spacing: 0.06em; line-height: 1.15; margin-bottom: 0.6rem; }
+  .card-body { padding: 1.2rem; }
+  .card-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; letter-spacing: 0.04em; margin-bottom: 0.6rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .card-meta { display: flex; align-items: center; gap: 0.6rem; justify-content: space-between; }
-  .year-tag { background: var(--tag); border: 1px solid var(--border); color: var(--muted); font-size: 0.78rem; padding: 0.25rem 0.65rem; border-radius: 6px; font-weight: 500; letter-spacing: 0.05em; }
+  .year-tag { background: var(--tag); border: 1px solid var(--border); color: var(--muted); font-size: 0.78rem; padding: 0.25rem 0.65rem; border-radius: 6px; }
   .rating { display: flex; align-items: center; gap: 0.35rem; font-weight: 500; font-size: 0.95rem; }
-  .star { color: var(--accent); font-size: 0.9rem; }
-  .rating-bar-wrap { height: 3px; background: var(--border); border-radius: 2px; margin-top: 0.9rem; overflow: hidden; }
-  .rating-bar { height: 100%; border-radius: 2px; background: linear-gradient(90deg, var(--accent), var(--accent2)); }
-  .genre-tag { display: inline-block; font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.18rem 0.55rem; border-radius: 4px; margin-top: 0.7rem; font-weight: 500; }
-  .no-results { grid-column: 1 / -1; text-align: center; padding: 4rem 2rem; color: var(--muted); }
-  .no-results-icon { font-size: 3rem; margin-bottom: 1rem; }
-  .no-results h3 { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; letter-spacing: 0.1em; margin-bottom: 0.5rem; color: var(--text); }
+  .star { color: var(--accent); }
 
   /* ============ MODAL ============ */
   .modal-overlay {
-    position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 1000;
-    display: flex; align-items: center; justify-content: center; padding: 1.5rem;
-    opacity: 0; pointer-events: none; transition: opacity 0.3s ease; backdrop-filter: blur(6px);
+    position: fixed; inset: 0; background: rgba(0,0,0,0.92); z-index: 1000;
+    display: flex; align-items: center; justify-content: center; padding: 1rem;
+    opacity: 0; pointer-events: none; transition: opacity 0.3s ease; backdrop-filter: blur(8px);
   }
   .modal-overlay.open { opacity: 1; pointer-events: all; }
   .modal {
-    background: #181820; border-radius: 20px; overflow: hidden; width: 100%;
-    max-width: 780px; max-height: 90vh; overflow-y: auto; position: relative;
-    transform: scale(0.88) translateY(40px); opacity: 0;
-    transition: transform 0.38s cubic-bezier(0.34, 1.3, 0.64, 1), opacity 0.3s ease;
-    box-shadow: 0 40px 100px rgba(0,0,0,0.85);
+    background: #101015; border-radius: 24px; overflow: hidden; width: 100%;
+    max-width: 850px; max-height: 95vh; overflow-y: auto; position: relative;
+    transform: scale(0.9) translateY(20px); opacity: 0;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 50px 100px rgba(0,0,0,0.8); border: 1px solid var(--border);
   }
   .modal-overlay.open .modal { transform: scale(1) translateY(0); opacity: 1; }
-  .modal::-webkit-scrollbar { width: 5px; }
-  .modal::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
 
-  .modal-hero { position: relative; height: 340px; display: flex; align-items: flex-end; overflow: hidden; }
-  .modal-hero-bg { position: absolute; inset: 0; z-index: 0; }
-  .modal-hero-grain {
-    position: absolute; inset: 0; z-index: 1; opacity: 0.35;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.2'/%3E%3C/svg%3E");
+  .modal-hero { position: relative; height: 450px; display: flex; align-items: flex-end; overflow: hidden; }
+  .modal-hero-bg { 
+    position: absolute; inset: 0; z-index: 0; 
+    background-size: cover; background-position: center 20%;
   }
   .modal-hero-gradient {
     position: absolute; inset: 0; z-index: 2;
-    background: linear-gradient(to bottom, rgba(24,24,32,0.05) 0%, rgba(24,24,32,0.5) 55%, #181820 100%);
+    background: linear-gradient(to top, #101015 5%, rgba(16,16,21,0.4) 50%, transparent 100%);
   }
-  /* Floating big letter backdrop in hero */
-  .modal-hero-letter {
-    position: absolute; right: 2rem; top: 50%; transform: translateY(-50%);
-    font-family: 'Bebas Neue', sans-serif; font-size: 14rem; line-height: 1;
-    opacity: 0.07; z-index: 1; pointer-events: none; letter-spacing: -0.05em;
-  }
-  .modal-hero-content { position: relative; z-index: 3; padding: 1.8rem 2.5rem; width: 100%; }
+  .modal-hero-content { position: relative; z-index: 3; padding: 2rem 3rem; width: 100%; }
   .modal-movie-title {
-    font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.8rem, 6vw, 4.5rem);
-    letter-spacing: 0.05em; line-height: 1; margin-bottom: 1.3rem;
-    text-shadow: 0 2px 30px rgba(0,0,0,0.9);
+    font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.5rem, 6vw, 5rem);
+    letter-spacing: 0.02em; line-height: 0.9; margin-bottom: 1.5rem;
   }
-  .modal-actions { display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap; }
+  .modal-actions { display: flex; gap: 1rem; }
   .btn-play {
-    display: flex; align-items: center; gap: 0.55rem; background: #fff; color: #000;
-    border: none; padding: 0.7rem 1.8rem; border-radius: 8px; font-family: 'DM Sans', sans-serif;
-    font-size: 1rem; font-weight: 700; cursor: pointer; transition: background 0.2s, transform 0.15s;
-    letter-spacing: 0.02em;
+    display: flex; align-items: center; gap: 0.8rem; background: var(--accent); color: #000;
+    border: none; padding: 0.8rem 2.2rem; border-radius: 12px; font-family: 'DM Sans', sans-serif;
+    font-size: 1.1rem; font-weight: 700; cursor: pointer; transition: transform 0.2s;
   }
-  .btn-play:hover { background: #ddd; transform: scale(1.04); }
-  .btn-play svg { width: 16px; height: 16px; }
-  .btn-icon {
-    width: 42px; height: 42px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.5);
-    background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center;
-    cursor: pointer; transition: border-color 0.2s, background 0.2s; backdrop-filter: blur(4px);
-  }
-  .btn-icon:hover { border-color: #fff; background: rgba(255,255,255,0.25); }
-  .btn-icon svg { width: 18px; height: 18px; }
+  .btn-play:hover { transform: scale(1.05); filter: brightness(1.1); }
+  
+  .modal-body { padding: 0 3rem 3rem; display: grid; grid-template-columns: 2fr 1fr; gap: 3rem; }
+  @media(max-width: 768px) { .modal-body { grid-template-columns: 1fr; padding: 0 2rem 2rem; } .modal-hero { height: 350px; } }
+
+  .modal-desc { font-size: 1.05rem; line-height: 1.8; color: #b8b8cc; margin-bottom: 2rem; }
+  .modal-info-block { margin-bottom: 1.5rem; }
+  .modal-info-block label { display: block; font-size: 0.75rem; text-transform: uppercase; color: var(--muted); margin-bottom: 0.4rem; letter-spacing: 0.1em; }
+  .modal-info-block p { font-size: 0.95rem; color: var(--text); }
+  
+  .modal-sidebar { background: rgba(255,255,255,0.03); padding: 1.5rem; border-radius: 16px; border: 1px solid var(--border); }
+  .modal-rating-val { font-size: 2.5rem; font-weight: 800; color: var(--accent); font-family: 'Bebas Neue', sans-serif; }
   .modal-close {
-    position: absolute; top: 1rem; right: 1rem; z-index: 10; width: 36px; height: 36px;
-    border-radius: 50%; border: none; background: rgba(20,20,30,0.9); color: #fff;
-    font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center;
-    transition: background 0.2s; backdrop-filter: blur(4px);
+    position: absolute; top: 1.5rem; right: 1.5rem; z-index: 10; width: 40px; height: 40px;
+    border-radius: 50%; border: none; background: rgba(0,0,0,0.5); color: #fff;
+    cursor: pointer; backdrop-filter: blur(10px); display: flex; align-items: center; justify-content: center;
   }
-  .modal-close:hover { background: rgba(60,60,80,0.98); }
-
-  .modal-body { padding: 1.5rem 2.5rem 2.5rem; }
-  .modal-top-row { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 1.5rem; }
-  @media(max-width: 520px) { .modal-top-row { grid-template-columns: 1fr; } }
-
-  .modal-meta-row { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 1rem; flex-wrap: wrap; }
-  .meta-badge { font-size: 0.75rem; font-weight: 600; padding: 0.22rem 0.6rem; border-radius: 5px; letter-spacing: 0.05em; }
-  .badge-year { background: rgba(255,255,255,0.1); color: var(--text); }
-  .badge-hd { border: 1px solid rgba(255,255,255,0.3); color: rgba(255,255,255,0.65); }
-  .badge-genre { background: var(--tag); border: 1px solid var(--border); color: var(--muted); }
-
-  .modal-desc { font-size: 0.93rem; line-height: 1.75; color: #b8b8cc; margin-bottom: 1.8rem; }
-
-  .modal-rating-section { margin-bottom: 1.8rem; }
-  .modal-rating-label { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.5rem; }
-  .modal-rating-label span { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); }
-  .modal-rating-label strong { font-size: 1.5rem; color: var(--accent); font-weight: 700; letter-spacing: -0.01em; }
-  .modal-rating-bar { height: 5px; background: var(--border); border-radius: 3px; overflow: hidden; }
-  .modal-rating-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent2)); border-radius: 3px; transition: width 0.7s cubic-bezier(0.4,0,0.2,1); }
-
-  .modal-info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem 2rem; }
-  @media(max-width: 520px) { .modal-info-grid { grid-template-columns: 1fr; } }
-  .modal-info-block label { display: block; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); margin-bottom: 0.35rem; }
-  .modal-info-block p { font-size: 0.88rem; color: var(--text); line-height: 1.55; }
-
-  /* Palette classes */
-  .p0{background:linear-gradient(135deg,#1a1a2e,#16213e)}.p1{background:linear-gradient(135deg,#1a0a00,#2d1500)}.p2{background:linear-gradient(135deg,#001a1a,#002d2d)}.p3{background:linear-gradient(135deg,#0d001a,#1a0030)}.p4{background:linear-gradient(135deg,#001a0a,#002d18)}.p5{background:linear-gradient(135deg,#1a1a00,#2d2800)}.p6{background:linear-gradient(135deg,#1a000a,#2d0015)}.p7{background:linear-gradient(135deg,#00101a,#001a2d)}
-  .tc0{color:#7090ff}.tc1{color:#ff9060}.tc2{color:#40dfdf}.tc3{color:#bf80ff}.tc4{color:#50df90}.tc5{color:#dfd040}.tc6{color:#ff6090}.tc7{color:#50b0ff}
-  .gt0{background:rgba(112,144,255,0.15);color:#7090ff}.gt1{background:rgba(255,144,96,0.15);color:#ff9060}.gt2{background:rgba(64,223,223,0.15);color:#40dfdf}.gt3{background:rgba(191,128,255,0.15);color:#bf80ff}.gt4{background:rgba(80,223,144,0.15);color:#50df90}.gt5{background:rgba(223,208,64,0.15);color:#dfd040}.gt6{background:rgba(255,96,144,0.15);color:#ff6090}.gt7{background:rgba(80,176,255,0.15);color:#50b0ff}
 </style>
 </head>
 <body>
@@ -230,9 +184,7 @@
   <select id="yearFilter"><option value="">All Years</option></select>
   <select id="sortBy">
     <option value="rating-desc">Rating: High → Low</option>
-    <option value="rating-asc">Rating: Low → High</option>
     <option value="year-desc">Year: Newest</option>
-    <option value="year-asc">Year: Oldest</option>
     <option value="title-asc">Title: A → Z</option>
   </select>
   <span class="count" id="count"></span>
@@ -240,54 +192,37 @@
 
 <div class="grid" id="grid"></div>
 
-<!-- MODAL -->
 <div class="modal-overlay" id="modalOverlay">
   <div class="modal" id="modal">
-    <button class="modal-close" id="modalClose" aria-label="Close">✕</button>
+    <button class="modal-close" id="modalClose">✕</button>
     <div class="modal-hero">
       <div class="modal-hero-bg" id="modalHeroBg"></div>
-      <div class="modal-hero-grain"></div>
       <div class="modal-hero-gradient"></div>
-      <div class="modal-hero-letter" id="modalHeroLetter"></div>
       <div class="modal-hero-content">
         <div class="modal-movie-title" id="modalTitle"></div>
         <div class="modal-actions">
           <button class="btn-play" id="modalPlayBtn">
-            <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
-            Play
-          </button>
-          <button class="btn-icon" title="Add to My List">
-            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          </button>
-          <button class="btn-icon" title="Like">
-            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3z"/><path d="M7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+            Watch Trailer
           </button>
         </div>
       </div>
     </div>
 
     <div class="modal-body">
-      <div class="modal-meta-row">
-        <span class="meta-badge badge-year" id="modalYear"></span>
-        <span class="meta-badge badge-hd">HD</span>
-        <span class="meta-badge badge-genre" id="modalGenre"></span>
-      </div>
-
-      <div class="modal-rating-section">
-        <div class="modal-rating-label">
-          <span>⭐ IMDb Rating</span>
-          <strong id="modalRatingVal"></strong>
-        </div>
-        <div class="modal-rating-bar"><div class="modal-rating-fill" id="modalRatingFill" style="width:0%"></div></div>
-      </div>
-
-      <p class="modal-desc" id="modalDesc"></p>
-
-      <div class="modal-info-grid">
-        <div class="modal-info-block"><label>Cast</label><p id="modalCast"></p></div>
+      <div class="modal-main">
+        <p class="modal-desc" id="modalDesc"></p>
+        <div class="modal-info-block"><label>The Cast</label><p id="modalCast"></p></div>
         <div class="modal-info-block"><label>Director</label><p id="modalDirector"></p></div>
+      </div>
+      <div class="modal-sidebar">
+        <div class="modal-info-block">
+          <label>IMDb Rating</label>
+          <div class="modal-rating-val" id="modalRatingVal"></div>
+        </div>
+        <div class="modal-info-block"><label>Release Year</label><p id="modalYear"></p></div>
         <div class="modal-info-block"><label>Duration</label><p id="modalDuration"></p></div>
-        <div class="modal-info-block"><label>This film is</label><p id="modalVibes"></p></div>
+        <div class="modal-info-block"><label>Genre</label><p id="modalGenre"></p></div>
       </div>
     </div>
   </div>
@@ -295,33 +230,22 @@
 
 <script>
 const movies = [
-  { title:"Inception", rating:8.8, year:2010, genre:"Sci-Fi", desc:"A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a C.E.O.", cast:"Leonardo DiCaprio, Joseph Gordon-Levitt, Elliot Page", director:"Christopher Nolan", duration:"2h 28m", vibes:"Mind-bending, Thrilling, Cerebral" },
-  { title:"Interstellar", rating:8.6, year:2014, genre:"Sci-Fi", desc:"A team of explorers travel through a wormhole in space in an attempt to ensure humanity's survival as Earth faces extinction.", cast:"Matthew McConaughey, Anne Hathaway, Jessica Chastain", director:"Christopher Nolan", duration:"2h 49m", vibes:"Epic, Emotional, Visionary" },
-  { title:"The Dark Knight", rating:9.0, year:2008, genre:"Action", desc:"When the menace known as the Joker wreaks havoc and chaos on the people of Gotham, Batman must accept one of the greatest psychological and physical tests of his ability to fight injustice.", cast:"Christian Bale, Heath Ledger, Aaron Eckhart", director:"Christopher Nolan", duration:"2h 32m", vibes:"Dark, Intense, Iconic" },
-  { title:"Parasite", rating:8.5, year:2019, genre:"Thriller", desc:"Greed and class discrimination threaten the newly formed symbiotic relationship between the wealthy Park family and the destitute Kim clan.", cast:"Song Kang-ho, Lee Sun-kyun, Cho Yeo-jeong", director:"Bong Joon-ho", duration:"2h 12m", vibes:"Satirical, Suspenseful, Shocking" },
-  { title:"The Shawshank Redemption", rating:9.3, year:1994, genre:"Drama", desc:"Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.", cast:"Tim Robbins, Morgan Freeman, Bob Gunton", director:"Frank Darabont", duration:"2h 22m", vibes:"Hopeful, Moving, Timeless" },
-  { title:"Spirited Away", rating:8.6, year:2001, genre:"Animation", desc:"During her family's move to the suburbs, a sullen 10-year-old girl wanders into a world ruled by gods, witches, and spirits, where humans are changed into beasts.", cast:"Daveigh Chase, Suzanne Pleshette, Miyu Irino", director:"Hayao Miyazaki", duration:"2h 5m", vibes:"Magical, Wondrous, Imaginative" },
-  { title:"Pulp Fiction", rating:8.9, year:1994, genre:"Crime", desc:"The lives of two mob hitmen, a boxer, a gangster and his wife, and a pair of bandits intertwine in four tales of violence and redemption.", cast:"John Travolta, Uma Thurman, Samuel L. Jackson", director:"Quentin Tarantino", duration:"2h 34m", vibes:"Stylish, Cool, Unpredictable" },
-  { title:"The Godfather", rating:9.2, year:1972, genre:"Crime", desc:"The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.", cast:"Marlon Brando, Al Pacino, James Caan", director:"Francis Ford Coppola", duration:"2h 55m", vibes:"Masterful, Operatic, Legendary" },
-  { title:"Blade Runner 2049", rating:8.0, year:2017, genre:"Sci-Fi", desc:"Young Blade Runner K's discovery of a long-buried secret leads him to track down former Blade Runner Rick Deckard, who's been missing for thirty years.", cast:"Ryan Gosling, Harrison Ford, Ana de Armas", director:"Denis Villeneuve", duration:"2h 44m", vibes:"Atmospheric, Meditative, Beautiful" },
-  { title:"Mad Max: Fury Road", rating:8.1, year:2015, genre:"Action", desc:"In a post-apocalyptic wasteland, a woman rebels against a tyrannical ruler in search of her homeland with the aid of a group of female prisoners and a drifter.", cast:"Tom Hardy, Charlize Theron, Nicholas Hoult", director:"George Miller", duration:"2h 0m", vibes:"Relentless, Visceral, Spectacular" },
-  { title:"Get Out", rating:7.7, year:2017, genre:"Horror", desc:"A young African-American visits his white girlfriend's parents for the weekend, where his uneasiness about their reception of him eventually reaches a boiling point.", cast:"Daniel Kaluuya, Allison Williams, Bradley Whitford", director:"Jordan Peele", duration:"1h 44m", vibes:"Unsettling, Sharp, Relevant" },
-  { title:"Whiplash", rating:8.5, year:2014, genre:"Drama", desc:"A promising young drummer enrolls at a cut-throat music conservatory where his progress is challenged by an instructor who will stop at nothing to realize a student's potential.", cast:"Miles Teller, J.K. Simmons, Melissa Benoist", director:"Damien Chazelle", duration:"1h 46m", vibes:"Intense, Gripping, Electrifying" },
-  { title:"Dune", rating:8.0, year:2021, genre:"Sci-Fi", desc:"Feature adaptation of Frank Herbert's science fiction novel about the son of a noble family entrusted with the protection of the most valuable asset in the galaxy.", cast:"Timothée Chalamet, Rebecca Ferguson, Oscar Isaac", director:"Denis Villeneuve", duration:"2h 35m", vibes:"Immersive, Grand, Mythic" },
-  { title:"Everything Everywhere All at Once", rating:7.8, year:2022, genre:"Action", desc:"An aging Chinese immigrant is swept up in an insane adventure where she alone can save the world by exploring other universes connecting with the lives she could have led.", cast:"Michelle Yeoh, Stephanie Hsu, Ke Huy Quan", director:"Daniels", duration:"2h 19m", vibes:"Chaotic, Heartfelt, Genre-defying" },
-  { title:"The Revenant", rating:8.0, year:2015, genre:"Drama", desc:"A frontiersman on a fur trading expedition in the 1820s fights for survival after being mauled by a bear and left for dead by members of his own hunting team.", cast:"Leonardo DiCaprio, Tom Hardy, Will Poulter", director:"Alejandro G. Iñárritu", duration:"2h 36m", vibes:"Raw, Brutal, Majestic" },
-  { title:"1917", rating:8.3, year:2019, genre:"War", desc:"April 6, 1917. Two soldiers are assigned to race against time and deliver a message that will stop 1,600 men from walking into a deadly trap.", cast:"George MacKay, Dean-Charles Chapman, Mark Strong", director:"Sam Mendes", duration:"1h 59m", vibes:"Harrowing, Immersive, Relentless" },
-];
-
-const heroBgs = [
-  'linear-gradient(135deg,#1c1c4e 0%,#2a3a7e 100%)',
-  'linear-gradient(135deg,#3a1500 0%,#5a2500 100%)',
-  'linear-gradient(135deg,#003a3a 0%,#004f55 100%)',
-  'linear-gradient(135deg,#1e0040 0%,#350060 100%)',
-  'linear-gradient(135deg,#003a18 0%,#005528 100%)',
-  'linear-gradient(135deg,#3a3a00 0%,#555000 100%)',
-  'linear-gradient(135deg,#3a0018 0%,#550025 100%)',
-  'linear-gradient(135deg,#00253a 0%,#003555 100%)',
+  { title:"Inception", rating:8.8, year:2010, genre:"Sci-Fi", poster:"https://image.tmdb.org/t/p/w500/9gk7fn9s9q9ov79Q9m9M3Qzdq3p.jpg", desc:"A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a C.E.O.", cast:"Leonardo DiCaprio, Joseph Gordon-Levitt", director:"Christopher Nolan", duration:"2h 28m" },
+  { title:"Interstellar", rating:8.6, year:2014, genre:"Sci-Fi", poster:"https://image.tmdb.org/t/p/w500/gEU2QniE6E77NI6vCU67oQvj9Zs.jpg", desc:"A team of explorers travel through a wormhole in space in an attempt to ensure humanity's survival.", cast:"Matthew McConaughey, Anne Hathaway", director:"Christopher Nolan", duration:"2h 49m" },
+  { title:"The Dark Knight", rating:9.0, year:2008, genre:"Action", poster:"https://image.tmdb.org/t/p/w500/qJ2tW6WMUDr9p1v3Cmp6sdz2RC5.jpg", desc:"Batman must accept one of the greatest psychological and physical tests of his ability to fight injustice.", cast:"Christian Bale, Heath Ledger", director:"Christopher Nolan", duration:"2h 32m" },
+  { title:"Parasite", rating:8.5, year:2019, genre:"Thriller", poster:"https://image.tmdb.org/t/p/w500/7IiTTj0ZBSvCTeIqq6j2vYpZCcP.jpg", desc:"Greed and class discrimination threaten the newly formed symbiotic relationship between two families.", cast:"Song Kang-ho, Lee Sun-kyun", director:"Bong Joon-ho", duration:"2h 12m" },
+  { title:"The Shawshank Redemption", rating:9.3, year:1994, genre:"Drama", poster:"https://image.tmdb.org/t/p/w500/q6y0GoSzhBiaOnyBFb7Wv0lbvws.jpg", desc:"Two imprisoned men bond over a number of years, finding solace and eventual redemption.", cast:"Tim Robbins, Morgan Freeman", director:"Frank Darabont", duration:"2h 22m" },
+  { title:"Spirited Away", rating:8.6, year:2001, genre:"Animation", poster:"https://image.tmdb.org/t/p/w500/39wmItS6Sq4SKYZ1YqU0Zqbs9UK.jpg", desc:"A 10-year-old girl wanders into a world ruled by gods, witches, and spirits.", cast:"Daveigh Chase, Suzanne Pleshette", director:"Hayao Miyazaki", duration:"2h 5m" },
+  { title:"Pulp Fiction", rating:8.9, year:1994, genre:"Crime", poster:"https://image.tmdb.org/t/p/w500/d5iIl9h9mNpms6oGRvC2CCycPmS.jpg", desc:"The lives of two mob hitmen, a boxer, and a gangster's wife intertwine in four tales of violence.", cast:"John Travolta, Uma Thurman", director:"Quentin Tarantino", duration:"2h 34m" },
+  { title:"The Godfather", rating:9.2, year:1972, genre:"Crime", poster:"https://image.tmdb.org/t/p/w500/3bhkrjSTX4XayKWgaK1D4qy49Yh.jpg", desc:"The aging patriarch of an organized crime dynasty transfers control of his empire to his reluctant son.", cast:"Marlon Brando, Al Pacino", director:"Francis Ford Coppola", duration:"2h 55m" },
+  { title:"Blade Runner 2049", rating:8.0, year:2017, genre:"Sci-Fi", poster:"https://image.tmdb.org/t/p/w500/gajva2L0rQ6SvyvNow6Etv97jb8.jpg", desc:"A young Blade Runner's discovery of a long-buried secret leads him to track down Rick Deckard.", cast:"Ryan Gosling, Harrison Ford", director:"Denis Villeneuve", duration:"2h 44m" },
+  { title:"Mad Max: Fury Road", rating:8.1, year:2015, genre:"Action", poster:"https://image.tmdb.org/t/p/w500/h8fR98Sptv9Ym6L9YvBfw0oCO37.jpg", desc:"In a post-apocalyptic wasteland, a woman rebels against a tyrannical ruler.", cast:"Tom Hardy, Charlize Theron", director:"George Miller", duration:"2h 0m" },
+  { title:"Get Out", rating:7.7, year:2017, genre:"Horror", poster:"https://image.tmdb.org/t/p/w500/1X6vAnS38Uy0rSSTp60vX92An1p.jpg", desc:"A young man visits his girlfriend's parents, where uneasiness reaches a boiling point.", cast:"Daniel Kaluuya, Allison Williams", director:"Jordan Peele", duration:"1h 44m" },
+  { title:"Whiplash", rating:8.5, year:2014, genre:"Drama", poster:"https://image.tmdb.org/t/p/w500/7fn624qbO7B3U6U8PhPmZqNETQp.jpg", desc:"A promising young drummer is challenged by an instructor who will stop at nothing.", cast:"Miles Teller, J.K. Simmons", director:"Damien Chazelle", duration:"1h 46m" },
+  { title:"Dune", rating:8.0, year:2021, genre:"Sci-Fi", poster:"https://image.tmdb.org/t/p/w500/d5NXSklfto0uWxAF7RFEvXfeCww.jpg", desc:"The son of a noble family is entrusted with the protection of the most valuable asset in the galaxy.", cast:"Timothée Chalamet, Rebecca Ferguson", director:"Denis Villeneuve", duration:"2h 35m" },
+  { title:"Everything Everywhere All at Once", rating:7.8, year:2022, genre:"Action", poster:"https://image.tmdb.org/t/p/w500/w3LxiVYdWZwrAPbsuZYwU7roS0m.jpg", desc:"An aging Chinese immigrant is swept up in an insane adventure across the multiverse.", cast:"Michelle Yeoh, Ke Huy Quan", director:"Daniels", duration:"2h 19m" },
+  { title:"The Revenant", rating:8.0, year:2015, genre:"Drama", poster:"https://image.tmdb.org/t/p/w500/3939Zup6ST6S7X9q966779D699s.jpg", desc:"A frontiersman on a fur trading expedition fights for survival after being mauled by a bear.", cast:"Leonardo DiCaprio, Tom Hardy", director:"Alejandro G. Iñárritu", duration:"2h 36m" },
+  { title:"1917", rating:8.3, year:2019, genre:"War", poster:"https://image.tmdb.org/t/p/w500/iZpe0vL7vOtR6yG99MqY38ox79m.jpg", desc:"Two soldiers race against time to deliver a message that will stop 1,600 men from a trap.", cast:"George MacKay, Dean-Charles Chapman", director:"Sam Mendes", duration:"1h 59m" },
 ];
 
 const grid = document.getElementById('grid');
@@ -332,10 +256,11 @@ const countEl = document.getElementById('count');
 const overlay = document.getElementById('modalOverlay');
 const modalClose = document.getElementById('modalClose');
 
+// Init Year Filter
 const years = [...new Set(movies.map(m => m.year))].sort((a,b)=>b-a);
 years.forEach(y => { const o=document.createElement('option'); o.value=y; o.textContent=y; yearEl.appendChild(o); });
 
-function openModal(movie, pIdx) {
+function openModal(movie) {
   document.getElementById('modalTitle').textContent = movie.title;
   document.getElementById('modalYear').textContent = movie.year;
   document.getElementById('modalGenre').textContent = movie.genre;
@@ -343,15 +268,12 @@ function openModal(movie, pIdx) {
   document.getElementById('modalCast').textContent = movie.cast;
   document.getElementById('modalDirector').textContent = movie.director;
   document.getElementById('modalDuration').textContent = movie.duration;
-  document.getElementById('modalVibes').textContent = movie.vibes;
-  document.getElementById('modalRatingVal').textContent = movie.rating.toFixed(1) + ' / 10';
-  document.getElementById('modalHeroBg').style.background = heroBgs[pIdx];
-  document.getElementById('modalHeroLetter').textContent = movie.title.charAt(0);
-  document.getElementById('modalPlayBtn').onclick = () => alert(`🎬 Now playing: ${movie.title}`);
-
-  const fill = document.getElementById('modalRatingFill');
-  fill.style.width = '0%';
-  setTimeout(() => { fill.style.width = ((movie.rating - 5) / 5 * 100) + '%'; }, 100);
+  document.getElementById('modalRatingVal').textContent = movie.rating.toFixed(1);
+  
+  // Set the big hero background image
+  document.getElementById('modalHeroBg').style.backgroundImage = `url('${movie.poster}')`;
+  
+  document.getElementById('modalPlayBtn').onclick = () => alert(`Now searching for trailer: ${movie.title}`);
 
   overlay.classList.add('open');
   document.body.style.overflow = 'hidden';
@@ -361,36 +283,31 @@ function closeModal() { overlay.classList.remove('open'); document.body.style.ov
 
 modalClose.addEventListener('click', closeModal);
 overlay.addEventListener('click', e => { if(e.target===overlay) closeModal(); });
-document.addEventListener('keydown', e => { if(e.key==='Escape') closeModal(); });
 
 function render() {
   const q = searchEl.value.toLowerCase().trim();
   const yr = yearEl.value;
   const sort = sortEl.value;
+  
   let filtered = movies.filter(m => (!q||m.title.toLowerCase().includes(q)) && (!yr||m.year==yr));
+  
   filtered.sort((a,b) => {
     if(sort==='rating-desc') return b.rating-a.rating;
-    if(sort==='rating-asc')  return a.rating-b.rating;
-    if(sort==='year-desc')   return b.year-a.year;
-    if(sort==='year-asc')    return a.year-b.year;
-    if(sort==='title-asc')   return a.title.localeCompare(b.title);
+    if(sort==='year-desc') return b.year-a.year;
+    if(sort==='title-asc') return a.title.localeCompare(b.title);
     return 0;
   });
+
   countEl.textContent = `${filtered.length} film${filtered.length!==1?'s':''}`;
-  if(!filtered.length) {
-    grid.innerHTML=`<div class="no-results"><div class="no-results-icon">🎬</div><h3>No films found</h3><p>Try a different search or filter</p></div>`;
-    return;
-  }
-  grid.innerHTML = filtered.map((m,idx) => {
-    const p = getPalette(movies.indexOf(m));
-    const bar = ((m.rating-5)/5)*100;
-    const words = m.title.split(' ');
-    const short = words.length>3 ? words.slice(0,3).join(' ')+'…' : m.title;
-    return `<div class="card" style="animation-delay:${idx*0.04}s" data-idx="${movies.indexOf(m)}" data-p="${p}">
-      <div class="card-poster p${p}">
+  
+  grid.innerHTML = filtered.map((m, idx) => `
+    <div class="card" style="animation-delay:${idx*0.05}s" onclick="openModal(${JSON.stringify(m).replace(/"/g, '&quot;')})">
+      <div class="card-poster">
         <div class="poster-grain"></div>
-        <div class="poster-title tc${p}">${short}</div>
-        <div class="card-hover-play"><svg viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg></div>
+        <img src="${m.poster}" alt="${m.title}" loading="lazy">
+        <div class="card-hover-play">
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+        </div>
       </div>
       <div class="card-body">
         <div class="card-title">${m.title}</div>
@@ -398,18 +315,11 @@ function render() {
           <span class="year-tag">${m.year}</span>
           <div class="rating"><span class="star">★</span> ${m.rating.toFixed(1)}</div>
         </div>
-        <div class="rating-bar-wrap"><div class="rating-bar" style="width:${bar}%"></div></div>
-        ${m.genre?`<span class="genre-tag gt${p}">${m.genre}</span>`:''}
       </div>
-    </div>`;
-  }).join('');
-
-  grid.querySelectorAll('.card').forEach(card => {
-    card.addEventListener('click', () => openModal(movies[+card.dataset.idx], +card.dataset.p));
-  });
+    </div>
+  `).join('');
 }
 
-function getPalette(i) { return i % 8; }
 searchEl.addEventListener('input', render);
 yearEl.addEventListener('change', render);
 sortEl.addEventListener('change', render);
