@@ -295,22 +295,37 @@
 
 <script>
 const movies = [
-  { title:"Inception", rating:8.8, year:2010, genre:"Sci-Fi", desc:"A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a C.E.O.", cast:"Leonardo DiCaprio, Joseph Gordon-Levitt, Elliot Page", director:"Christopher Nolan", duration:"2h 28m", vibes:"Mind-bending, Thrilling, Cerebral" },
-  { title:"Interstellar", rating:8.6, year:2014, genre:"Sci-Fi", desc:"A team of explorers travel through a wormhole in space in an attempt to ensure humanity's survival as Earth faces extinction.", cast:"Matthew McConaughey, Anne Hathaway, Jessica Chastain", director:"Christopher Nolan", duration:"2h 49m", vibes:"Epic, Emotional, Visionary" },
-  { title:"The Dark Knight", rating:9.0, year:2008, genre:"Action", desc:"When the menace known as the Joker wreaks havoc and chaos on the people of Gotham, Batman must accept one of the greatest psychological and physical tests of his ability to fight injustice.", cast:"Christian Bale, Heath Ledger, Aaron Eckhart", director:"Christopher Nolan", duration:"2h 32m", vibes:"Dark, Intense, Iconic" },
-  { title:"Parasite", rating:8.5, year:2019, genre:"Thriller", desc:"Greed and class discrimination threaten the newly formed symbiotic relationship between the wealthy Park family and the destitute Kim clan.", cast:"Song Kang-ho, Lee Sun-kyun, Cho Yeo-jeong", director:"Bong Joon-ho", duration:"2h 12m", vibes:"Satirical, Suspenseful, Shocking" },
-  { title:"The Shawshank Redemption", rating:9.3, year:1994, genre:"Drama", desc:"Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.", cast:"Tim Robbins, Morgan Freeman, Bob Gunton", director:"Frank Darabont", duration:"2h 22m", vibes:"Hopeful, Moving, Timeless" },
-  { title:"Spirited Away", rating:8.6, year:2001, genre:"Animation", desc:"During her family's move to the suburbs, a sullen 10-year-old girl wanders into a world ruled by gods, witches, and spirits, where humans are changed into beasts.", cast:"Daveigh Chase, Suzanne Pleshette, Miyu Irino", director:"Hayao Miyazaki", duration:"2h 5m", vibes:"Magical, Wondrous, Imaginative" },
-  { title:"Pulp Fiction", rating:8.9, year:1994, genre:"Crime", desc:"The lives of two mob hitmen, a boxer, a gangster and his wife, and a pair of bandits intertwine in four tales of violence and redemption.", cast:"John Travolta, Uma Thurman, Samuel L. Jackson", director:"Quentin Tarantino", duration:"2h 34m", vibes:"Stylish, Cool, Unpredictable" },
-  { title:"The Godfather", rating:9.2, year:1972, genre:"Crime", desc:"The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.", cast:"Marlon Brando, Al Pacino, James Caan", director:"Francis Ford Coppola", duration:"2h 55m", vibes:"Masterful, Operatic, Legendary" },
-  { title:"Blade Runner 2049", rating:8.0, year:2017, genre:"Sci-Fi", desc:"Young Blade Runner K's discovery of a long-buried secret leads him to track down former Blade Runner Rick Deckard, who's been missing for thirty years.", cast:"Ryan Gosling, Harrison Ford, Ana de Armas", director:"Denis Villeneuve", duration:"2h 44m", vibes:"Atmospheric, Meditative, Beautiful" },
-  { title:"Mad Max: Fury Road", rating:8.1, year:2015, genre:"Action", desc:"In a post-apocalyptic wasteland, a woman rebels against a tyrannical ruler in search of her homeland with the aid of a group of female prisoners and a drifter.", cast:"Tom Hardy, Charlize Theron, Nicholas Hoult", director:"George Miller", duration:"2h 0m", vibes:"Relentless, Visceral, Spectacular" },
-  { title:"Get Out", rating:7.7, year:2017, genre:"Horror", desc:"A young African-American visits his white girlfriend's parents for the weekend, where his uneasiness about their reception of him eventually reaches a boiling point.", cast:"Daniel Kaluuya, Allison Williams, Bradley Whitford", director:"Jordan Peele", duration:"1h 44m", vibes:"Unsettling, Sharp, Relevant" },
-  { title:"Whiplash", rating:8.5, year:2014, genre:"Drama", desc:"A promising young drummer enrolls at a cut-throat music conservatory where his progress is challenged by an instructor who will stop at nothing to realize a student's potential.", cast:"Miles Teller, J.K. Simmons, Melissa Benoist", director:"Damien Chazelle", duration:"1h 46m", vibes:"Intense, Gripping, Electrifying" },
-  { title:"Dune", rating:8.0, year:2021, genre:"Sci-Fi", desc:"Feature adaptation of Frank Herbert's science fiction novel about the son of a noble family entrusted with the protection of the most valuable asset in the galaxy.", cast:"Timothée Chalamet, Rebecca Ferguson, Oscar Isaac", director:"Denis Villeneuve", duration:"2h 35m", vibes:"Immersive, Grand, Mythic" },
-  { title:"Everything Everywhere All at Once", rating:7.8, year:2022, genre:"Action", desc:"An aging Chinese immigrant is swept up in an insane adventure where she alone can save the world by exploring other universes connecting with the lives she could have led.", cast:"Michelle Yeoh, Stephanie Hsu, Ke Huy Quan", director:"Daniels", duration:"2h 19m", vibes:"Chaotic, Heartfelt, Genre-defying" },
-  { title:"The Revenant", rating:8.0, year:2015, genre:"Drama", desc:"A frontiersman on a fur trading expedition in the 1820s fights for survival after being mauled by a bear and left for dead by members of his own hunting team.", cast:"Leonardo DiCaprio, Tom Hardy, Will Poulter", director:"Alejandro G. Iñárritu", duration:"2h 36m", vibes:"Raw, Brutal, Majestic" },
-  { title:"1917", rating:8.3, year:2019, genre:"War", desc:"April 6, 1917. Two soldiers are assigned to race against time and deliver a message that will stop 1,600 men from walking into a deadly trap.", cast:"George MacKay, Dean-Charles Chapman, Mark Strong", director:"Sam Mendes", duration:"1h 59m", vibes:"Harrowing, Immersive, Relentless" },
+{ title:"Inception", rating:8.8, year:2010, genre:"Sci-Fi", poster:"Inception.jpgg", desc:"A thief who steals corporate secrets...", cast:"Leonardo DiCaprio, Joseph Gordon-Levitt, Elliot Page", director:"Christopher Nolan", duration:"2h 28m", vibes:"Mind-bending, Thrilling, Cerebral" },
+
+{ title:"Interstellar", rating:8.6, year:2014, genre:"Sci-Fi", poster:"https://image.tmdb.org/t/p/w500/rAiYTfKGqDCRIIqo664sY9XZIvQ.jpg", desc:"A team of explorers travel...", cast:"Matthew McConaughey, Anne Hathaway, Jessica Chastain", director:"Christopher Nolan", duration:"2h 49m", vibes:"Epic, Emotional, Visionary" },
+
+{ title:"The Dark Knight", rating:9.0, year:2008, genre:"Action", poster:"https://image.tmdb.org/t/p/w500/qJ2tW6WMUDux911r6m7haRef0WH.jpg", desc:"When the menace known as the Joker...", cast:"Christian Bale, Heath Ledger, Aaron Eckhart", director:"Christopher Nolan", duration:"2h 32m", vibes:"Dark, Intense, Iconic" },
+
+{ title:"Parasite", rating:8.5, year:2019, genre:"Thriller", poster:"https://image.tmdb.org/t/p/w500/7IiTTgloJzvGI1TAYymCfbfl3vT.jpg", desc:"Greed and class discrimination...", cast:"Song Kang-ho, Lee Sun-kyun, Cho Yeo-jeong", director:"Bong Joon-ho", duration:"2h 12m", vibes:"Satirical, Suspenseful, Shocking" },
+
+{ title:"The Shawshank Redemption", rating:9.3, year:1994, genre:"Drama", poster:"https://image.tmdb.org/t/p/w500/q6y0Go1tsGEsmtFryDOJo3dEmqu.jpg", desc:"Two imprisoned men bond...", cast:"Tim Robbins, Morgan Freeman, Bob Gunton", director:"Frank Darabont", duration:"2h 22m", vibes:"Hopeful, Moving, Timeless" },
+
+{ title:"Spirited Away", rating:8.6, year:2001, genre:"Animation", poster:"https://image.tmdb.org/t/p/w500/39wmItIWsg5sZMyRUHLkWBcuVCM.jpg", desc:"During her family's move...", cast:"Daveigh Chase, Suzanne Pleshette, Miyu Irino", director:"Hayao Miyazaki", duration:"2h 5m", vibes:"Magical, Wondrous, Imaginative" },
+
+{ title:"Pulp Fiction", rating:8.9, year:1994, genre:"Crime", poster:"https://image.tmdb.org/t/p/w500/d5iIlFn5s0ImszYzBPb8JPIfbXD.jpg", desc:"The lives of two mob hitmen...", cast:"John Travolta, Uma Thurman, Samuel L. Jackson", director:"Quentin Tarantino", duration:"2h 34m", vibes:"Stylish, Cool, Unpredictable" },
+
+{ title:"The Godfather", rating:9.2, year:1972, genre:"Crime", poster:"https://image.tmdb.org/t/p/w500/3bhkrj58Vtu7enYsRolD1fZdja1.jpg", desc:"The aging patriarch...", cast:"Marlon Brando, Al Pacino, James Caan", director:"Francis Ford Coppola", duration:"2h 55m", vibes:"Masterful, Operatic, Legendary" },
+
+{ title:"Blade Runner 2049", rating:8.0, year:2017, genre:"Sci-Fi", poster:"https://image.tmdb.org/t/p/w500/gajva2L0rPYkEWjzgFlBXCAVBE5.jpg", desc:"Young Blade Runner K's discovery...", cast:"Ryan Gosling, Harrison Ford, Ana de Armas", director:"Denis Villeneuve", duration:"2h 44m", vibes:"Atmospheric, Meditative, Beautiful" },
+
+{ title:"Mad Max: Fury Road", rating:8.1, year:2015, genre:"Action", poster:"https://image.tmdb.org/t/p/w500/8tZYtuWezp8JbcsvHYO0O46tFbo.jpg", desc:"In a post-apocalyptic wasteland...", cast:"Tom Hardy, Charlize Theron, Nicholas Hoult", director:"George Miller", duration:"2h 0m", vibes:"Relentless, Visceral, Spectacular" },
+
+{ title:"Get Out", rating:7.7, year:2017, genre:"Horror", poster:"https://image.tmdb.org/t/p/w500/tFXcEccSQMf3lfhfXKSU9iRBpa3.jpg", desc:"A young African-American visits...", cast:"Daniel Kaluuya, Allison Williams, Bradley Whitford", director:"Jordan Peele", duration:"1h 44m", vibes:"Unsettling, Sharp, Relevant" },
+
+{ title:"Whiplash", rating:8.5, year:2014, genre:"Drama", poster:"Whisplash.webp", desc:"A promising young drummer...", cast:"Miles Teller, J.K. Simmons, Melissa Benoist", director:"Damien Chazelle", duration:"1h 46m", vibes:"Intense, Gripping, Electrifying" },
+
+{ title:"Dune", rating:8.0, year:2021, genre:"Sci-Fi", poster:"https://image.tmdb.org/t/p/w500/d5NXSklXo0qyIYkgV94XAgMIckC.jpg", desc:"Feature adaptation of Frank Herbert...", cast:"Timothée Chalamet, Rebecca Ferguson, Oscar Isaac", director:"Denis Villeneuve", duration:"2h 35m", vibes:"Immersive, Grand, Mythic" },
+
+{ title:"Everything Everywhere All at Once", rating:7.8, year:2022, genre:"Action", poster:"https://image.tmdb.org/t/p/w500/w3LxiVYdWWRvEVdn5RYq6jIqkb1.jpg", desc:"An aging Chinese immigrant...", cast:"Michelle Yeoh, Stephanie Hsu, Ke Huy Quan", director:"Daniels", duration:"2h 19m", vibes:"Chaotic, Heartfelt, Genre-defying" },
+
+{ title:"The Revenant", rating:8.0, year:2015, genre:"Drama", poster:"The Revenant.jpg", desc:"A frontiersman on a fur trading expedition...", cast:"Leonardo DiCaprio, Tom Hardy, Will Poulter", director:"Alejandro G. Iñárritu", duration:"2h 36m", vibes:"Raw, Brutal, Majestic" },
+
+{ title:"1917", rating:8.3, year:2019, genre:"War", poster:"https://image.tmdb.org/t/p/w500/iZf0KyrE25z1sage4SYFLCCrMi9.jpg", desc:"April 6, 1917. Two soldiers...", cast:"George MacKay, Dean-Charles Chapman, Mark Strong", director:"Sam Mendes", duration:"1h 59m", vibes:"Harrowing, Immersive, Relentless" },
 ];
 
 const heroBgs = [
@@ -345,7 +360,8 @@ function openModal(movie, pIdx) {
   document.getElementById('modalDuration').textContent = movie.duration;
   document.getElementById('modalVibes').textContent = movie.vibes;
   document.getElementById('modalRatingVal').textContent = movie.rating.toFixed(1) + ' / 10';
-  document.getElementById('modalHeroBg').style.background = heroBgs[pIdx];
+ document.getElementById('modalHeroBg').style.background = 
+  `url(${movie.poster}) center/cover no-repeat`;
   document.getElementById('modalHeroLetter').textContent = movie.title.charAt(0);
   document.getElementById('modalPlayBtn').onclick = () => alert(`🎬 Now playing: ${movie.title}`);
 
@@ -367,7 +383,12 @@ function render() {
   const q = searchEl.value.toLowerCase().trim();
   const yr = yearEl.value;
   const sort = sortEl.value;
-  let filtered = movies.filter(m => (!q||m.title.toLowerCase().includes(q)) && (!yr||m.year==yr));
+
+  let filtered = movies.filter(m =>
+    (!q || m.title.toLowerCase().includes(q)) &&
+    (!yr || m.year == yr)
+  );
+
   filtered.sort((a,b) => {
     if(sort==='rating-desc') return b.rating-a.rating;
     if(sort==='rating-asc')  return a.rating-b.rating;
@@ -376,39 +397,69 @@ function render() {
     if(sort==='title-asc')   return a.title.localeCompare(b.title);
     return 0;
   });
+
   countEl.textContent = `${filtered.length} film${filtered.length!==1?'s':''}`;
+  grid.innerHTML = "";
+
   if(!filtered.length) {
-    grid.innerHTML=`<div class="no-results"><div class="no-results-icon">🎬</div><h3>No films found</h3><p>Try a different search or filter</p></div>`;
+    grid.innerHTML = `
+      <div class="no-results">
+        <div class="no-results-icon">🎬</div>
+        <h3>No Movies Found</h3>
+        <p>Try adjusting your search or filters.</p>
+      </div>
+    `;
     return;
   }
-  grid.innerHTML = filtered.map((m,idx) => {
-    const p = getPalette(movies.indexOf(m));
-    const bar = ((m.rating-5)/5)*100;
-    const words = m.title.split(' ');
-    const short = words.length>3 ? words.slice(0,3).join(' ')+'…' : m.title;
-    return `<div class="card" style="animation-delay:${idx*0.04}s" data-idx="${movies.indexOf(m)}" data-p="${p}">
-      <div class="card-poster p${p}">
-        <div class="poster-grain"></div>
-        <div class="poster-title tc${p}">${short}</div>
-        <div class="card-hover-play"><svg viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg></div>
-      </div>
-      <div class="card-body">
-        <div class="card-title">${m.title}</div>
-        <div class="card-meta">
-          <span class="year-tag">${m.year}</span>
-          <div class="rating"><span class="star">★</span> ${m.rating.toFixed(1)}</div>
-        </div>
-        <div class="rating-bar-wrap"><div class="rating-bar" style="width:${bar}%"></div></div>
-        ${m.genre?`<span class="genre-tag gt${p}">${m.genre}</span>`:''}
-      </div>
-    </div>`;
-  }).join('');
 
-  grid.querySelectorAll('.card').forEach(card => {
-    card.addEventListener('click', () => openModal(movies[+card.dataset.idx], +card.dataset.p));
+  filtered.forEach((m, i) => {
+
+    const palette = getPalette(i);
+
+    grid.innerHTML += `
+      <div class="card" onclick="openModal(movies[${movies.indexOf(m)}], ${palette})">
+
+        <!-- POSTER (UNCHANGED) -->
+        <div class="card-poster">
+         <img 
+  src="${m.poster}" 
+  alt="${m.title}"
+  style="width:100%; height:100%; object-fit:cover;"
+  onerror="this.onerror=null; this.src='https://via.placeholder.com/500x750/111118/f5c842?text=${encodeURIComponent(m.title)}';">
+          <div class="card-hover-play">
+            <svg viewBox="0 0 24 24" fill="white">
+              <polygon points="5,3 19,12 5,21"/>
+            </svg>
+          </div>
+        </div>
+
+        <!-- CARD BODY -->
+        <div class="card-body">
+
+          <div class="card-title">${m.title}</div>
+
+          <div class="card-meta">
+            <span class="year-tag">${m.year}</span>
+
+            <div class="rating">
+              <span class="star">★</span>
+              ${m.rating.toFixed(1)}
+            </div>
+          </div>
+
+          <div class="rating-bar-wrap">
+            <div class="rating-bar" style="width:${m.rating * 10}%"></div>
+          </div>
+
+          <div class="genre-tag gt${palette}">
+            ${m.genre}
+          </div>
+
+        </div>
+      </div>
+    `;
   });
 }
-
 function getPalette(i) { return i % 8; }
 searchEl.addEventListener('input', render);
 yearEl.addEventListener('change', render);
